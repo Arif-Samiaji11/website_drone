@@ -26,10 +26,6 @@ class StoreBookingDroneRequest extends FormRequest
             'catatan' => ['nullable', 'string'],
             'dp_booking_tanggal' => ['required', 'integer'],
             'bukti_pembayaran_dp' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:10240'],
-            'tipe_jadwal' => ['required', 'string', 'in:harian,jam'],
-            'tanggal_selesai_acara' => ['nullable', 'required_if:tipe_jadwal,harian', 'date', 'after:tanggal'],
-            'estimasi_selesai_acara' => ['nullable', 'required_if:tipe_jadwal,harian', 'string', 'max:255'],
-            'waktu_mulai_acara' => ['nullable', 'required_if:tipe_jadwal,jam', 'string', 'max:255'],
         ];
     }
 
@@ -48,7 +44,6 @@ class StoreBookingDroneRequest extends FormRequest
             'bukti_pembayaran_dp.image' => 'Bukti pembayaran harus berupa gambar.',
             'bukti_pembayaran_dp.mimes' => 'Format gambar harus jpeg, png, jpg, gif, svg, atau webp.',
             'bukti_pembayaran_dp.max' => 'Ukuran gambar bukti pembayaran maksimal 10MB.',
-            'tanggal_selesai_acara.after' => 'Tanggal selesai acara harus melebihi tanggal acara/booking.',
         ];
     }
 }

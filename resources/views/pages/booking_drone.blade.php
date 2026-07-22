@@ -951,18 +951,24 @@
       }
 
       const tanggalSelesaiInput = document.getElementById('tanggal-selesai-input');
+      const estimasiSelesaiInput = document.getElementById('estimasi-selesai-input');
+      const waktuMulaiInput = document.getElementById('waktu-mulai-input');
 
       function updateMinTanggalSelesai() {
-        if (dateInput.value && tanggalSelesaiInput) {
-          let startDate = new Date(dateInput.value);
-          startDate.setDate(startDate.getDate() + 1);
-          let yyyy = startDate.getFullYear();
-          let mm = String(startDate.getMonth() + 1).padStart(2, '0');
-          let dd = String(startDate.getDate()).padStart(2, '0');
-          tanggalSelesaiInput.min = `${yyyy}-${mm}-${dd}`;
-          
-          if (tanggalSelesaiInput.value && tanggalSelesaiInput.value < tanggalSelesaiInput.min) {
-            tanggalSelesaiInput.value = '';
+        if (dateInput && dateInput.value && tanggalSelesaiInput) {
+          try {
+            let startDate = new Date(dateInput.value);
+            startDate.setDate(startDate.getDate() + 1);
+            let yyyy = startDate.getFullYear();
+            let mm = String(startDate.getMonth() + 1).padStart(2, '0');
+            let dd = String(startDate.getDate()).padStart(2, '0');
+            tanggalSelesaiInput.min = `${yyyy}-${mm}-${dd}`;
+            
+            if (tanggalSelesaiInput.value && tanggalSelesaiInput.value < tanggalSelesaiInput.min) {
+              tanggalSelesaiInput.value = '';
+            }
+          } catch (e) {
+            console.error("Error updating min date:", e);
           }
         }
       }
@@ -984,28 +990,45 @@
       const form = document.getElementById('booking-drone-form');
       if (form) {
         form.addEventListener('submit', function(e) {
-          const val = tipeJadwalSelect.value;
+          const val = tipeJadwalSelect ? tipeJadwalSelect.value : '';
           if (val === 'harian') {
-            const startStr = dateInput.value;
-            const endStr = tanggalSelesaiInput.value;
+            const startStr = dateInput ? dateInput.value : '';
+            const endStr = tanggalSelesaiInput ? tanggalSelesaiInput.value : '';
+            const timeStr = estimasiSelesaiInput ? estimasiSelesaiInput.value : '';
+
             if (!startStr) {
               e.preventDefault();
               alert("Silakan pilih Tanggal Acara terlebih dahulu!");
-              dateInput.focus();
+              if (dateInput) dateInput.focus();
               return false;
             }
             if (!endStr) {
               e.preventDefault();
               alert("Silakan pilih Tanggal Selesai Acara!");
-              tanggalSelesaiInput.focus();
+              if (tanggalSelesaiInput) tanggalSelesaiInput.focus();
               return false;
             }
+            if (!timeStr) {
+              e.preventDefault();
+              alert("Silakan tentukan Estimasi Waktu Selesai Acara!");
+              if (estimasiSelesaiInput) estimasiSelesaiInput.focus();
+              return false;
+            }
+
             const start = new Date(startStr);
             const end = new Date(endStr);
             if (end <= start) {
               e.preventDefault();
               alert("Tanggal Selesai Acara harus melebihi Tanggal Acara!");
-              tanggalSelesaiInput.focus();
+              if (tanggalSelesaiInput) tanggalSelesaiInput.focus();
+              return false;
+            }
+          } else if (val === 'jam') {
+            const timeStr = waktuMulaiInput ? waktuMulaiInput.value : '';
+            if (!timeStr) {
+              e.preventDefault();
+              alert("Silakan tentukan Waktu Mulai Acara!");
+              if (waktuMulaiInput) waktuMulaiInput.focus();
               return false;
             }
           }
