@@ -35,6 +35,10 @@ Semua perubahan dan perkembangan pada proyek **website_drone** akan dicatat di f
   - Mengintegrasikan ringkasan statistik (total data & jumlah data baru) dari **Booking Drone**, **Booking Crews**, **Order Drone**, dan **Servis Drone**.
   - Menampilkan tabel **Aktivitas & Pengajuan Terbaru** yang menggabungkan 8 data teranyar dari keempat layanan di atas lengkap dengan status, detail, dan integrasi peta interaktif Leaflet serta modal bukti pembayaran DP.
   - Memperbarui controller ([AdminDashboardController.php](file:///e:/website_mriki/website_drone/app/Http/Controllers/Admin/AdminDashboardController.php)) untuk memuat data agregat secara realtime.
+- **Pembaruan Dashboard User**:
+  - Mengubah dashboard user ([dashboard.blade.php](file:///e:/website_mriki/website_drone/resources/views/dashboard.blade.php)) agar memuat data riwayat pemesanan secara aktif berdasarkan email akun pengguna yang sedang login.
+  - Menampilkan total jumlah transaksi pada grid status secara dinamis.
+  - Menambahkan tabel **Riwayat Pengajuan & Pemesanan Anda** lengkap dengan detail jenis layanan, catatan, status pengajuan, nominal DP, tombol pratinjau bukti bayar, dan tombol pintasan chat ("Chat Admin") yang langsung terhubung ke ruang obrolan terkait.
 
 ---
 
