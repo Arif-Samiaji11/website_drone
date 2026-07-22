@@ -16,9 +16,7 @@ class AdminBookingOrderController extends Controller
     // ==========================================
     public function bookingDroneIndex()
     {
-        // Mark all new bookings as read/proses
-        BookingDrone::where('status', 'baru')->update(['status' => 'proses']);
-
+        // Status baru dibiarkan dan TIDAK otomatis diubah ke proses saat dibuka
         $bookings = BookingDrone::latest()->paginate(15);
         return view('admin.submissions.booking_drone', compact('bookings'));
     }
@@ -35,9 +33,7 @@ class AdminBookingOrderController extends Controller
     // ==========================================
     public function bookingCrewIndex()
     {
-        // Mark all new booking crews as read/proses
-        BookingCrew::where('status', 'baru')->update(['status' => 'proses']);
-
+        // Status baru dibiarkan dan TIDAK otomatis diubah ke proses saat dibuka
         $bookings = BookingCrew::latest()->paginate(15);
         return view('admin.submissions.booking_crew', compact('bookings'));
     }
@@ -54,9 +50,7 @@ class AdminBookingOrderController extends Controller
     // ==========================================
     public function servisDroneIndex()
     {
-        // Mark all new servis as read/proses
-        ServisDrone::where('status', 'baru')->update(['status' => 'proses']);
-
+        // Status baru dibiarkan dan TIDAK otomatis diubah ke proses saat dibuka
         $servis = ServisDrone::latest()->paginate(15);
         return view('admin.submissions.servis_drone', compact('servis'));
     }
@@ -73,9 +67,7 @@ class AdminBookingOrderController extends Controller
     // ==========================================
     public function orderDroneIndex()
     {
-        // Mark all new orders as read/proses
-        OrderDrone::where('status', 'baru')->update(['status' => 'proses']);
-
+        // Status baru dibiarkan dan TIDAK otomatis diubah ke proses saat dibuka
         $orders = OrderDrone::latest()->paginate(15);
         return view('admin.submissions.order_drone', compact('orders'));
     }
@@ -134,7 +126,6 @@ class AdminBookingOrderController extends Controller
             case 'booking_drone':
                 $items = BookingDrone::where('id', '>', $lastId)->orderBy('id', 'asc')->get();
                 if ($items->isNotEmpty()) {
-                    BookingDrone::whereIn('id', $items->pluck('id'))->update(['status' => 'proses']);
                     $newLastId = $items->last()->id;
                     foreach ($items as $b) {
                         $html .= view('admin.submissions.partials.booking_drone_row', compact('b'))->render();
@@ -146,7 +137,6 @@ class AdminBookingOrderController extends Controller
             case 'booking_crew':
                 $items = BookingCrew::where('id', '>', $lastId)->orderBy('id', 'asc')->get();
                 if ($items->isNotEmpty()) {
-                    BookingCrew::whereIn('id', $items->pluck('id'))->update(['status' => 'proses']);
                     $newLastId = $items->last()->id;
                     foreach ($items as $b) {
                         $html .= view('admin.submissions.partials.booking_crew_row', compact('b'))->render();
@@ -158,7 +148,6 @@ class AdminBookingOrderController extends Controller
             case 'servis_drone':
                 $items = ServisDrone::where('id', '>', $lastId)->orderBy('id', 'asc')->get();
                 if ($items->isNotEmpty()) {
-                    ServisDrone::whereIn('id', $items->pluck('id'))->update(['status' => 'proses']);
                     $newLastId = $items->last()->id;
                     foreach ($items as $s) {
                         $html .= view('admin.submissions.partials.servis_drone_row', compact('s'))->render();
@@ -170,7 +159,6 @@ class AdminBookingOrderController extends Controller
             case 'order_drone':
                 $items = OrderDrone::where('id', '>', $lastId)->orderBy('id', 'asc')->get();
                 if ($items->isNotEmpty()) {
-                    OrderDrone::whereIn('id', $items->pluck('id'))->update(['status' => 'proses']);
                     $newLastId = $items->last()->id;
                     foreach ($items as $o) {
                         $html .= view('admin.submissions.partials.order_drone_row', compact('o'))->render();
@@ -185,5 +173,33 @@ class AdminBookingOrderController extends Controller
             'last_id' => $newLastId,
             'new_items' => $newItems
         ]);
+    }
+
+    public function prosesSubmission(Request $request)
+    {
+        $type = $request->input('type');
+        $id = $request->input('id');
+
+        switch ($type) {
+            case 'booking_drone':
+                $item = BookingDrone::findOrFail($id);
+                break;
+            case 'booking_crew':
+                $item = BookingCrew::findOrFail($id);
+                break;
+            case 'order_drone':
+                $item = OrderDrone::findOrFail($id);
+                break;
+            case 'servis_drone':
+                $item = ServisDrone::findOrFail($id);
+                break;
+            default:
+                return response()->json(['success' => false, 'message' => 'Tipe pengajuan tidak valid.'], 400);
+        }
+
+        $item->status = 'proses';
+        $item->save();
+
+        return response()->json(['success' => true, 'message' => 'Status pengajuan berhasil diubah menjadi proses.']);
     }
 }

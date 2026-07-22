@@ -7,6 +7,8 @@ use App\Models\BookingDrone;
 use App\Models\BookingCrew;
 use App\Models\OrderDrone;
 use App\Models\ServisDrone;
+use App\Models\User;
+use App\Models\Discussion;
 
 class AdminDashboardController extends Controller
 {
@@ -32,12 +34,23 @@ class AdminDashboardController extends Controller
             ],
         ];
 
-        // 2. Fetch latest submissions of each type
+        // 2. Fetch latest submissions of each type and map discussions
         $recentBookingDrones = BookingDrone::latest()->take(5)->get()->map(function ($item) {
             $item->submission_type = 'booking_drone';
             $item->submission_label = 'Booking Drone';
             $item->badge_color = 'bg-blue-100 text-blue-800 border-blue-200';
             $item->manage_route = route('admin.booking-drone.index');
+            
+            // Link discussion
+            $user = User::where('email', $item->email)->first();
+            $item->discussion_id = null;
+            if ($user) {
+                $disc = Discussion::firstOrCreate(
+                    ['user_id' => $user->id, 'service_type' => 'booking_drone'],
+                    ['title' => 'Booking Jasa Drone - ' . $user->name]
+                );
+                $item->discussion_id = $disc->id;
+            }
             return $item;
         });
 
@@ -46,6 +59,18 @@ class AdminDashboardController extends Controller
             $item->submission_label = 'Booking Crew';
             $item->badge_color = 'bg-purple-100 text-purple-800 border-purple-200';
             $item->manage_route = route('admin.booking-crews.index');
+            
+            // Link discussion
+            $user = User::where('email', $item->email)->first();
+            $item->discussion_id = null;
+            if ($user) {
+                // service_type for booking crew is booking_crews
+                $disc = Discussion::firstOrCreate(
+                    ['user_id' => $user->id, 'service_type' => 'booking_crews'],
+                    ['title' => 'Photographer & Videographer - ' . $user->name]
+                );
+                $item->discussion_id = $disc->id;
+            }
             return $item;
         });
 
@@ -54,6 +79,17 @@ class AdminDashboardController extends Controller
             $item->submission_label = 'Order Drone';
             $item->badge_color = 'bg-emerald-100 text-emerald-800 border-emerald-200';
             $item->manage_route = route('admin.order-drone.index');
+            
+            // Link discussion
+            $user = User::where('email', $item->email)->first();
+            $item->discussion_id = null;
+            if ($user) {
+                $disc = Discussion::firstOrCreate(
+                    ['user_id' => $user->id, 'service_type' => 'order_drone'],
+                    ['title' => 'Order Unit Drone - ' . $user->name]
+                );
+                $item->discussion_id = $disc->id;
+            }
             return $item;
         });
 
@@ -62,6 +98,17 @@ class AdminDashboardController extends Controller
             $item->submission_label = 'Servis Drone';
             $item->badge_color = 'bg-amber-100 text-amber-800 border-amber-200';
             $item->manage_route = route('admin.servis-drone.index');
+            
+            // Link discussion
+            $user = User::where('email', $item->email)->first();
+            $item->discussion_id = null;
+            if ($user) {
+                $disc = Discussion::firstOrCreate(
+                    ['user_id' => $user->id, 'service_type' => 'servis_drone'],
+                    ['title' => 'Servis Unit Drone - ' . $user->name]
+                );
+                $item->discussion_id = $disc->id;
+            }
             return $item;
         });
 

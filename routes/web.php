@@ -137,6 +137,7 @@ Route::prefix('admin')
         // ✅ Kelola Form Submissions Client
         Route::get('/submissions-new-count', [\App\Http\Controllers\Admin\AdminBookingOrderController::class, 'getNewSubmissionsCount'])->name('submissions.new-count');
         Route::get('/submissions/fetch-new', [\App\Http\Controllers\Admin\AdminBookingOrderController::class, 'fetchNew'])->name('submissions.fetch-new');
+        Route::post('/submissions/proses', [\App\Http\Controllers\Admin\AdminBookingOrderController::class, 'prosesSubmission'])->name('submissions.proses');
         Route::get('/booking-drone', [\App\Http\Controllers\Admin\AdminBookingOrderController::class, 'bookingDroneIndex'])->name('booking-drone.index');
         Route::delete('/booking-drone/{bookingDrone}', [\App\Http\Controllers\Admin\AdminBookingOrderController::class, 'bookingDroneDestroy'])->name('booking-drone.destroy');
 

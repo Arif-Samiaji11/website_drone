@@ -197,23 +197,26 @@
               </td>
               
               <!-- Status -->
-              <td class="px-6 py-4">
+              <td class="px-6 py-4" id="status-badge-{{ $item->submission_type }}-{{ $item->id }}">
                 @if($item->status === 'baru')
-                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-100">
-                    Baru
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                    Menunggu Persetujuan
                   </span>
                 @else
-                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
                     Proses
                   </span>
                 @endif
               </td>
 
-              <!-- Action Link -->
+              <!-- Action Button -->
               <td class="px-6 py-4 text-right">
-                <a href="{{ $item->manage_route }}" class="inline-flex items-center px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wide rounded-lg transition" style="text-decoration: none;">
+                <button type="button" 
+                        id="btn-kelola-{{ $item->submission_type }}-{{ $item->id }}"
+                        onclick="openManagePopup('{{ $item->submission_type }}', {{ $item->id }}, '{{ addslashes($item->nama) }}', '{{ $item->status }}', '{{ $item->discussion_id }}')" 
+                        class="inline-flex items-center px-3 py-1.5 {{ $item->status === 'proses' ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-slate-900 hover:bg-slate-800' }} text-white font-bold text-xs uppercase tracking-wide rounded-lg transition">
                   Kelola
-                </a>
+                </button>
               </td>
             </tr>
           @empty
@@ -230,6 +233,45 @@
           @endforelse
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for managing booking (Kelola) -->
+<div id="manageModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden">
+  <div class="relative max-w-md w-full bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-200 flex flex-col">
+    <!-- Modal Header -->
+    <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+      <h3 class="font-bold text-slate-800 text-base">Kelola Pesanan</h3>
+      <button onclick="closeManagePopup()" class="text-slate-400 hover:text-slate-600 text-lg transition focus:outline-none bg-transparent border-0 cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <!-- Modal Body -->
+    <div class="p-6 bg-slate-50 flex flex-col items-center text-center gap-6">
+      <div>
+        <p class="text-sm font-semibold text-slate-600">Silahkan kelola pesanan anda</p>
+      </div>
+      
+      <div class="flex flex-col sm:flex-row gap-3 w-full justify-center">
+        <!-- Chat Button (Left) -->
+        <a id="modalChatBtn" href="" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition flex items-center justify-center gap-1.5" style="text-decoration: none;">
+          <i class="fa fa-comments"></i> Chat dengan <span id="modalClientName">Client</span>
+        </a>
+        
+        <!-- Process Button (Right) -->
+        <button id="modalProsesBtn" onclick="processSubmission()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition flex items-center justify-center gap-1.5 border-0 cursor-pointer">
+          <i class="fa fa-check-circle"></i> Proses Pesanan
+        </button>
+      </div>
+    </div>
+    <!-- Modal Footer -->
+    <div class="px-6 py-4 border-t border-slate-100 bg-white flex justify-end">
+      <button onclick="closeManagePopup()" class="px-4 py-2 bg-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider rounded-xl transition border-0 cursor-pointer">
+        Tutup
+      </button>
     </div>
   </div>
 </div>
@@ -308,6 +350,119 @@
       modal.classList.add('hidden');
       document.body.classList.remove('overflow-hidden');
     }
+  }
+
+  // Manage popup logic
+  let activeSubmission = {
+    type: null,
+    id: null,
+    name: null,
+    status: null,
+    discussionId: null
+  };
+
+  function openManagePopup(type, id, name, status, discussionId) {
+    activeSubmission.type = type;
+    activeSubmission.id = id;
+    activeSubmission.name = name;
+    activeSubmission.status = status;
+    activeSubmission.discussionId = discussionId;
+
+    // Set client name in modal
+    document.getElementById('modalClientName').textContent = name;
+
+    // Configure Chat Button
+    const chatBtn = document.getElementById('modalChatBtn');
+    if (discussionId && discussionId !== '' && discussionId !== 'null') {
+      chatBtn.href = `{{ url('/admin/diskusi') }}/${discussionId}`;
+      chatBtn.classList.remove('opacity-50', 'pointer-events-none');
+    } else {
+      // Fallback
+      chatBtn.href = `{{ route('admin.diskusi.index') }}`;
+    }
+
+    // Configure Process Button
+    const prosesBtn = document.getElementById('modalProsesBtn');
+    if (status === 'proses') {
+      prosesBtn.disabled = true;
+      prosesBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      prosesBtn.innerHTML = '<i class="fa fa-check-circle"></i> Sudah Diproses';
+    } else {
+      prosesBtn.disabled = false;
+      prosesBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      prosesBtn.innerHTML = '<i class="fa fa-check-circle"></i> Proses Pesanan';
+    }
+
+    // Show Modal
+    const modal = document.getElementById('manageModal');
+    modal.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+  }
+
+  function closeManagePopup() {
+    const modal = document.getElementById('manageModal');
+    if (modal) {
+      modal.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+  }
+
+  function processSubmission() {
+    if (!activeSubmission.type || !activeSubmission.id) return;
+
+    const btn = document.getElementById('modalProsesBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Memproses...';
+
+    fetch("{{ route('admin.submissions.proses') }}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": "{{ csrf_token() }}"
+      },
+      body: JSON.stringify({
+        type: activeSubmission.type,
+        id: activeSubmission.id
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        // 1. Update status badge on dashboard
+        const badgeCell = document.getElementById(`status-badge-${activeSubmission.type}-${activeSubmission.id}`);
+        if (badgeCell) {
+          badgeCell.innerHTML = `
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              Proses
+            </span>
+          `;
+        }
+
+        // 2. Update Kelola button color to yellow on dashboard
+        const actionBtn = document.getElementById(`btn-kelola-${activeSubmission.type}-${activeSubmission.id}`);
+        if (actionBtn) {
+          actionBtn.className = "inline-flex items-center px-3 py-1.5 bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-xs uppercase tracking-wide rounded-lg transition";
+          // Update attribute
+          actionBtn.setAttribute('onclick', `openManagePopup('${activeSubmission.type}', ${activeSubmission.id}, '${activeSubmission.name.replace(/'/g, "\\'")}', 'proses', '${activeSubmission.discussionId}')`);
+        }
+
+        // Update active status locally
+        activeSubmission.status = 'proses';
+
+        // Close popup
+        closeManagePopup();
+      } else {
+        alert(data.message || "Gagal memproses pesanan.");
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa fa-check-circle"></i> Proses Pesanan';
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Terjadi kesalahan koneksi.");
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa fa-check-circle"></i> Proses Pesanan';
+    });
   }
 
   // Map Modal Logic
@@ -396,6 +551,7 @@
     if (e.key === 'Escape') {
       closeImageModal();
       closeMapModal();
+      closeManagePopup();
     }
   });
 </script>

@@ -35,6 +35,12 @@ Semua perubahan dan perkembangan pada proyek **website_drone** akan dicatat di f
   - Mengintegrasikan ringkasan statistik (total data & jumlah data baru) dari **Booking Drone**, **Booking Crews**, **Order Drone**, dan **Servis Drone**.
   - Menampilkan tabel **Aktivitas & Pengajuan Terbaru** yang menggabungkan 8 data teranyar dari keempat layanan di atas lengkap dengan status, detail, dan integrasi peta interaktif Leaflet serta modal bukti pembayaran DP.
   - Memperbarui controller ([AdminDashboardController.php](file:///e:/website_mriki/website_drone/app/Http/Controllers/Admin/AdminDashboardController.php)) untuk memuat data agregat secara realtime.
+  - Mengubah label status default `'baru'` menjadi **"Menunggu Persetujuan"** (dengan latar belakang kuning/amber).
+  - Menghapus transisi status otomatis dari `'baru'` ke `'proses'` pada `AdminBookingOrderController` agar status tetap "Menunggu Persetujuan" sampai diproses secara manual oleh admin.
+  - Menambahkan tombol aksi **"Kelola"** dinamis yang berubah warna menjadi kuning (amber) saat status pesanan adalah `'proses'`.
+  - Mengimplementasikan pop-up modal **Kelola Pesanan** dengan dua tombol tindakan:
+    - **Tindakan Kiri**: Chatting langsung dengan pemesan terkait, yang secara otomatis melacak atau menginisialisasi ID Discussion yang sesuai untuk pengguna tersebut berdasarkan email mereka.
+    - **Tindakan Kanan**: Memproses Pesanan yang secara instan merubah status pesanan menjadi `'proses'` via AJAX POST request tanpa memuat ulang halaman.
 - **Pembaruan Dashboard User**:
   - Mengubah dashboard user ([dashboard.blade.php](file:///e:/website_mriki/website_drone/resources/views/dashboard.blade.php)) agar memuat data riwayat pemesanan secara aktif berdasarkan email akun pengguna yang sedang login.
   - Menampilkan total jumlah transaksi pada grid status secara dinamis.
