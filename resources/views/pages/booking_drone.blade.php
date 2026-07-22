@@ -386,6 +386,40 @@
                 </p>
               </div>
 
+              <!-- Rincian Jadwal Acara -->
+              <div class="col-span-2 border-t border-white/5 pt-4">
+                <label class="vg-label">Rincian Jadwal Acara</label>
+                <select name="tipe_jadwal" id="tipe-jadwal-select" class="vg-input bg-[#151a30] text-white" required>
+                  <option value="">-- Pilih Tipe Acara --</option>
+                  <option value="harian" {{ old('tipe_jadwal') == 'harian' ? 'selected' : '' }}>Acara Harian</option>
+                  <option value="jam" {{ old('tipe_jadwal') == 'jam' ? 'selected' : '' }}>Acara Waktu Jam</option>
+                </select>
+              </div>
+
+              <!-- Harian Inputs Container -->
+              <div id="harian-inputs-container" class="col-span-2 grid grid-cols-2 gap-4 hidden">
+                <div class="col-span-2 sm:col-span-1">
+                  <label class="vg-label">Tanggal Selesai Acara</label>
+                  <input type="date" name="tanggal_selesai_acara" id="tanggal-selesai-input" value="{{ old('tanggal_selesai_acara') }}" class="vg-input">
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                  <label class="vg-label">Estimasi Waktu Selesai</label>
+                  <input type="time" name="estimasi_selesai_acara" id="estimasi-selesai-input" value="{{ old('estimasi_selesai_acara') }}" class="vg-input">
+                </div>
+              </div>
+
+              <!-- Waktu Jam Inputs Container -->
+              <div id="jam-inputs-container" class="col-span-2 grid grid-cols-2 gap-4 hidden">
+                <div class="col-span-2 sm:col-span-1">
+                  <label class="vg-label">Tanggal Acara</label>
+                  <input type="text" id="tanggal-acara-display" class="vg-input opacity-65" style="background-color: #151a30;" readonly>
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                  <label class="vg-label">Waktu Mulai Acara</label>
+                  <input type="time" name="waktu_mulai_acara" id="waktu-mulai-input" value="{{ old('waktu_mulai_acara') }}" class="vg-input">
+                </div>
+              </div>
+
               <div class="col-span-2">
                 <label class="vg-label">Upload Bukti Pembayaran DP</label>
                 <input type="file" name="bukti_pembayaran_dp" class="vg-input bg-[#151a30] text-white/70" accept="image/*" required>
@@ -865,6 +899,68 @@
           this.value = this.value.replace(/[^0-9+]/g, '');
         });
       }
+
+      // Toggle logic for Rincian Jadwal Acara
+      const tipeJadwalSelect = document.getElementById('tipe-jadwal-select');
+      const harianContainer = document.getElementById('harian-inputs-container');
+      const jamContainer = document.getElementById('jam-inputs-container');
+      const tanggalAcaraDisplay = document.getElementById('tanggal-acara-display');
+
+      function handleJadwalChange() {
+        const val = tipeJadwalSelect.value;
+        if (val === 'harian') {
+          harianContainer.classList.remove('hidden');
+          jamContainer.classList.add('hidden');
+          
+          // Toggle required attributes
+          harianContainer.querySelectorAll('input').forEach(i => i.required = true);
+          jamContainer.querySelectorAll('input').forEach(i => i.required = false);
+        } else if (val === 'jam') {
+          harianContainer.classList.add('hidden');
+          jamContainer.classList.remove('hidden');
+          
+          // Toggle required attributes
+          harianContainer.querySelectorAll('input').forEach(i => i.required = false);
+          jamContainer.querySelectorAll('input').forEach(i => i.required = true);
+          
+          updateTanggalAcaraDisplay();
+        } else {
+          harianContainer.classList.add('hidden');
+          jamContainer.classList.add('hidden');
+          harianContainer.querySelectorAll('input').forEach(i => i.required = false);
+          jamContainer.querySelectorAll('input').forEach(i => i.required = false);
+        }
+      }
+
+      function updateTanggalAcaraDisplay() {
+        if (dateInput.value) {
+          // Format dateInput.value (YYYY-MM-DD) to a more readable Indonesian format
+          const dateParts = dateInput.value.split('-');
+          if (dateParts.length === 3) {
+            const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            const year = dateParts[0];
+            const month = months[parseInt(dateParts[1]) - 1];
+            const day = dateParts[2];
+            tanggalAcaraDisplay.value = `${day} ${month} ${year}`;
+          } else {
+            tanggalAcaraDisplay.value = dateInput.value;
+          }
+        } else {
+          tanggalAcaraDisplay.value = "Pilih Tanggal Booking terlebih dahulu";
+        }
+      }
+
+      if (tipeJadwalSelect) {
+        tipeJadwalSelect.addEventListener('change', handleJadwalChange);
+      }
+      if (dateInput) {
+        dateInput.addEventListener('change', function() {
+          updateTanggalAcaraDisplay();
+        });
+      }
+
+      // Initialize
+      handleJadwalChange();
     });
   </script>
 </x-app-layout>

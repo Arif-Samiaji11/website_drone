@@ -11,6 +11,19 @@
       <i class="fa fa-map-marker text-red-500 mr-0.5"></i> {{ $b->lokasi }}
     </button>
     <div class="text-xs text-slate-500 mt-0.5"><i class="fa fa-calendar mr-1"></i> {{ $b->tanggal }}</div>
+    @if($b->tipe_jadwal)
+      <div class="mt-1">
+        @if($b->tipe_jadwal === 'harian')
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-150" title="Selesai: {{ $b->tanggal_selesai_acara }} (Estimasi: {{ $b->estimasi_selesai_acara }})">
+            <i class="fa fa-clock-o mr-1"></i> Harian s/d {{ \Carbon\Carbon::parse($b->tanggal_selesai_acara)->format('d M Y') }} ({{ $b->estimasi_selesai_acara }})
+          </span>
+        @elseif($b->tipe_jadwal === 'jam')
+          <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-150">
+            <i class="fa fa-clock-o mr-1"></i> Jam: {{ $b->waktu_mulai_acara }}
+          </span>
+        @endif
+      </div>
+    @endif
   </td>
   <td class="px-6 py-4 text-slate-700">
     <div class="font-bold text-slate-900">{{ $b->dp_booking_tanggal ? 'Rp ' . number_format($b->dp_booking_tanggal, 0, ',', '.') : '-' }}</div>

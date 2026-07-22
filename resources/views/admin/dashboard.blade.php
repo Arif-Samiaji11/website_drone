@@ -170,6 +170,20 @@
                 @else
                   <div class="text-slate-800 max-w-xs truncate" title="{{ $item->catatan }}">{{ $item->catatan ?? 'Tidak ada catatan' }}</div>
                 @endif
+
+                @if($item->submission_type === 'booking_drone' && $item->tipe_jadwal)
+                  <div class="mt-1">
+                    @if($item->tipe_jadwal === 'harian')
+                      <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-100" title="Selesai: {{ $item->tanggal_selesai_acara }} (Estimasi: {{ $item->estimasi_selesai_acara }})">
+                        Harian s/d {{ \Carbon\Carbon::parse($item->tanggal_selesai_acara)->format('d M Y') }} ({{ $item->estimasi_selesai_acara }})
+                      </span>
+                    @elseif($item->tipe_jadwal === 'jam')
+                      <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-50 text-purple-700 border border-purple-100">
+                        Jam: {{ $item->waktu_mulai_acara }}
+                      </span>
+                    @endif
+                  </div>
+                @endif
                 
                 @if($item->lokasi)
                   <button type="button" onclick="showMapModal('{{ addslashes($item->lokasi) }}')" class="text-xs text-slate-500 hover:text-blue-600 hover:underline transition text-left mt-1.5 block">

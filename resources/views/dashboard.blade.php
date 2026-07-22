@@ -305,6 +305,19 @@
                       <div class="text-xs text-white/60 mt-0.5">Paket: {{ $item->paket }}</div>
                     @else
                       <div class="text-white font-medium max-w-xs truncate" title="{{ $item->catatan }}">{{ $item->catatan ?? '-' }}</div>
+                      @if($item->submission_type === 'booking_drone' && $item->tipe_jadwal)
+                        <div class="mt-1">
+                          @if($item->tipe_jadwal === 'harian')
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30" title="Selesai: {{ $item->tanggal_selesai_acara }} (Estimasi: {{ $item->estimasi_selesai_acara }})">
+                              Harian s/d {{ \Carbon\Carbon::parse($item->tanggal_selesai_acara)->format('d M Y') }} ({{ $item->estimasi_selesai_acara }})
+                            </span>
+                          @elseif($item->tipe_jadwal === 'jam')
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                              Jam: {{ $item->waktu_mulai_acara }}
+                            </span>
+                          @endif
+                        </div>
+                      @endif
                     @endif
 
                     @if($item->lokasi)

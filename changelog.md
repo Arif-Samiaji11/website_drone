@@ -41,10 +41,18 @@ Semua perubahan dan perkembangan pada proyek **website_drone** akan dicatat di f
   - Mengimplementasikan pop-up modal **Kelola Pesanan** dengan dua tombol tindakan:
     - **Tindakan Kiri**: Chatting langsung dengan pemesan terkait, yang secara otomatis melacak atau menginisialisasi ID Discussion yang sesuai untuk pengguna tersebut berdasarkan email mereka.
     - **Tindakan Kanan**: Memproses Pesanan yang secara instan merubah status pesanan menjadi `'proses'` via AJAX POST request tanpa memuat ulang halaman.
+  - Menampilkan rincian tipe jadwal acara (Harian/Jam) di kolom Detail Pemesanan pada tabel aktivitas dashboard admin dan daftar booking drone.
+- **Pembaruan Halaman Form Booking Drone**:
+  - Menambahkan input dinamis **Rincian Jadwal Acara** pada pop-up modal **Booking Sekarang** di bawah kolom DP Booking Tanggal:
+    - Dropdown berisi pilihan: **Acara Harian** dan **Acara Waktu Jam**.
+    - Jika memilih **Acara Harian**: Menampilkan input untuk Tanggal Selesai Acara (date) dan Estimasi Waktu Selesai (time).
+    - Jika memilih **Acara Waktu Jam**: Menampilkan info Tanggal Acara otomatis yang disesuaikan dengan Tanggal Booking, serta menampilkan input untuk Waktu Mulai Acara (time).
+  - Menambahkan migrasi database untuk menyimpan kolom `tipe_jadwal`, `tanggal_selesai_acara`, `estimasi_selesai_acara`, dan `waktu_mulai_acara` di tabel `booking_drones` serta memperbarui model dan request validation.
 - **Pembaruan Dashboard User**:
   - Mengubah dashboard user ([dashboard.blade.php](file:///e:/website_mriki/website_drone/resources/views/dashboard.blade.php)) agar memuat data riwayat pemesanan secara aktif berdasarkan email akun pengguna yang sedang login.
   - Menampilkan total jumlah transaksi pada grid status secara dinamis.
   - Menambahkan tabel **Riwayat Pengajuan & Pemesanan Anda** lengkap dengan detail jenis layanan, catatan, status pengajuan, nominal DP, tombol pratinjau bukti bayar, dan tombol pintasan chat ("Chat Admin") yang langsung terhubung ke ruang obrolan terkait.
+  - Menampilkan rincian tipe jadwal acara (Harian/Jam) yang dipesan di bawah kolom Detail Pengajuan.
   - Menyesuaikan visualisasi status agar sama dengan admin: **"Menunggu Validasi"** (status baru, tanpa bukti DP), **"Menunggu Persetujuan"** (status baru, ada bukti DP), dan **"Diproses"** (status proses).
   - Mengubah keempat kartu status di grid dashboard (Status, Email, Tipe Akun, dan Total Pengajuan) menjadi tautan (`<a>`) yang interaktif:
     - **Status** & **Email** mengarah langsung ke halaman edit profil (`profile.edit`).
