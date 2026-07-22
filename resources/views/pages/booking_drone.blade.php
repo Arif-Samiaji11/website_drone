@@ -325,7 +325,7 @@
               </div>
 
               <div class="col-span-2 sm:col-span-1">
-                <label class="vg-label">Tanggal</label>
+                <label class="vg-label">Tanggal Acara</label>
                 <input type="date" name="tanggal" id="tanggal-input" value="{{ old('tanggal') }}" class="vg-input" required>
               </div>
 
@@ -950,17 +950,71 @@
         }
       }
 
+      const tanggalSelesaiInput = document.getElementById('tanggal-selesai-input');
+
+      function updateMinTanggalSelesai() {
+        if (dateInput.value && tanggalSelesaiInput) {
+          let startDate = new Date(dateInput.value);
+          startDate.setDate(startDate.getDate() + 1);
+          let yyyy = startDate.getFullYear();
+          let mm = String(startDate.getMonth() + 1).padStart(2, '0');
+          let dd = String(startDate.getDate()).padStart(2, '0');
+          tanggalSelesaiInput.min = `${yyyy}-${mm}-${dd}`;
+          
+          if (tanggalSelesaiInput.value && tanggalSelesaiInput.value < tanggalSelesaiInput.min) {
+            tanggalSelesaiInput.value = '';
+          }
+        }
+      }
+
       if (tipeJadwalSelect) {
-        tipeJadwalSelect.addEventListener('change', handleJadwalChange);
+        tipeJadwalSelect.addEventListener('change', function() {
+          handleJadwalChange();
+          updateMinTanggalSelesai();
+        });
       }
       if (dateInput) {
         dateInput.addEventListener('change', function() {
           updateTanggalAcaraDisplay();
+          updateMinTanggalSelesai();
+        });
+      }
+
+      // Form submit validation
+      const form = document.getElementById('booking-drone-form');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          const val = tipeJadwalSelect.value;
+          if (val === 'harian') {
+            const startStr = dateInput.value;
+            const endStr = tanggalSelesaiInput.value;
+            if (!startStr) {
+              e.preventDefault();
+              alert("Silakan pilih Tanggal Acara terlebih dahulu!");
+              dateInput.focus();
+              return false;
+            }
+            if (!endStr) {
+              e.preventDefault();
+              alert("Silakan pilih Tanggal Selesai Acara!");
+              tanggalSelesaiInput.focus();
+              return false;
+            }
+            const start = new Date(startStr);
+            const end = new Date(endStr);
+            if (end <= start) {
+              e.preventDefault();
+              alert("Tanggal Selesai Acara harus melebihi Tanggal Acara!");
+              tanggalSelesaiInput.focus();
+              return false;
+            }
+          }
         });
       }
 
       // Initialize
       handleJadwalChange();
+      updateMinTanggalSelesai();
     });
   </script>
 </x-app-layout>
