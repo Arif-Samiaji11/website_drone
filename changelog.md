@@ -29,6 +29,13 @@ Semua perubahan dan perkembangan pada proyek **website_drone** akan dicatat di f
 - **Pengaturan Global Admin**:
   - Konfigurasi Rekening Pembayaran dan Pengaturan Admin (`admin_settings`) yang fleksibel.
 
+### Changed
+- **Pembaruan Dashboard Admin**: 
+  - Mengubah tampilan dashboard admin ([dashboard.blade.php](file:///e:/website_mriki/website_drone/resources/views/admin/dashboard.blade.php)) menjadi lebih modern, profesional, dan user-friendly.
+  - Mengintegrasikan ringkasan statistik (total data & jumlah data baru) dari **Booking Drone**, **Booking Crews**, **Order Drone**, dan **Servis Drone**.
+  - Menampilkan tabel **Aktivitas & Pengajuan Terbaru** yang menggabungkan 8 data teranyar dari keempat layanan di atas lengkap dengan status, detail, dan integrasi peta interaktif Leaflet serta modal bukti pembayaran DP.
+  - Memperbarui controller ([AdminDashboardController.php](file:///e:/website_mriki/website_drone/app/Http/Controllers/Admin/AdminDashboardController.php)) untuk memuat data agregat secara realtime.
+
 ---
 
 ## Catatan Rilis & Struktur Proyek
