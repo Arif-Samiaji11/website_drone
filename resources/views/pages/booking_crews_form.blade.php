@@ -191,7 +191,7 @@
             </div>
 
             <div class="col-span-2">
-              <label class="vg-label">DP Booking Tanggal</label>
+              <label class="vg-label">Nominal DP Booking (Otomatis)</label>
               <input type="text" id="dp-display-input" class="vg-input text-emerald-400 font-bold" style="background-color: #151a30; color: #10b981; font-weight: bold;" value="Rp 100.000" readonly>
               <input type="hidden" name="dp_booking_tanggal" id="dp-hidden-input" value="100000">
               <p class="text-[10px] text-white/50 mt-1">
