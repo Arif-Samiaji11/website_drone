@@ -39,6 +39,10 @@ Semua perubahan dan perkembangan pada proyek **website_drone** akan dicatat di f
   - Mengubah dashboard user ([dashboard.blade.php](file:///e:/website_mriki/website_drone/resources/views/dashboard.blade.php)) agar memuat data riwayat pemesanan secara aktif berdasarkan email akun pengguna yang sedang login.
   - Menampilkan total jumlah transaksi pada grid status secara dinamis.
   - Menambahkan tabel **Riwayat Pengajuan & Pemesanan Anda** lengkap dengan detail jenis layanan, catatan, status pengajuan, nominal DP, tombol pratinjau bukti bayar, dan tombol pintasan chat ("Chat Admin") yang langsung terhubung ke ruang obrolan terkait.
+  - Mengubah keempat kartu status di grid dashboard (Status, Email, Tipe Akun, dan Total Pengajuan) menjadi tautan (`<a>`) yang interaktif:
+    - **Status** & **Email** mengarah langsung ke halaman edit profil (`profile.edit`).
+    - **Tipe Akun** mengarah ke dashboard admin (`admin.dashboard`) jika login sebagai admin, atau edit profil jika sebagai user biasa.
+    - **Total Pengajuan** mengarah langsung (smooth scroll anchor) ke tabel riwayat pengajuan di bagian bawah.
 
 ---
 

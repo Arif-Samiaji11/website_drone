@@ -217,7 +217,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
         
         {{-- Card 1: Status --}}
-        <div class="vg-status-card">
+        <a href="{{ route('profile.edit') }}" class="vg-status-card block hover:no-underline">
           <div class="vg-status-card__icon">
             <i class="fa fa-user-circle-o"></i>
           </div>
@@ -225,10 +225,10 @@
           <p class="font-bold text-emerald-400">
             Login aktif ✅
           </p>
-        </div>
+        </a>
 
         {{-- Card 2: Email --}}
-        <div class="vg-status-card">
+        <a href="{{ route('profile.edit') }}" class="vg-status-card block hover:no-underline">
           <div class="vg-status-card__icon">
             <i class="fa fa-envelope-o"></i>
           </div>
@@ -236,10 +236,10 @@
           <p class="truncate text-white" title="{{ auth()->user()->email }}">
             {{ auth()->user()->email }}
           </p>
-        </div>
+        </a>
 
         {{-- Card 3: Akun --}}
-        <div class="vg-status-card">
+        <a href="{{ (auth()->user()->is_admin ?? false) ? route('admin.dashboard') : route('profile.edit') }}" class="vg-status-card block hover:no-underline">
           <div class="vg-status-card__icon">
             <i class="fa fa-shield"></i>
           </div>
@@ -247,10 +247,10 @@
           <p class="text-white">
             {{ (auth()->user()->is_admin ?? false) ? 'Administrator' : 'User' }}
           </p>
-        </div>
+        </a>
 
-        {{-- Card 4: Menu --}}
-        <div class="vg-status-card">
+        {{-- Card 4: Total Pengajuan --}}
+        <a href="#riwayat-pengajuan" class="vg-status-card block hover:no-underline">
           <div class="vg-status-card__icon">
             <i class="fa fa-list"></i>
           </div>
@@ -258,12 +258,12 @@
           <p class="text-white font-bold">
             {{ $totalSubmissions }} Transaksi
           </p>
-        </div>
+        </a>
 
       </div>
 
       {{-- Table Riwayat Pengajuan --}}
-      <div class="vg-table-container">
+      <div class="vg-table-container" id="riwayat-pengajuan">
         <div class="vg-table-header flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h3 class="text-lg font-bold text-white">Riwayat Pengajuan & Pemesanan Anda</h3>
