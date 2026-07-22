@@ -100,6 +100,7 @@ Route::prefix('admin')
     ->middleware(['auth', 'admin'])
     ->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard/fetch-latest', [AdminDashboardController::class, 'fetchLatest'])->name('dashboard.fetch-latest');
 
         /*
         |--------------------------------------------------------------

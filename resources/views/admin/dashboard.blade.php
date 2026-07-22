@@ -33,15 +33,17 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
           </svg>
         </div>
-        @if($counts['booking_drone']['new'] > 0)
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-800 animate-pulse">
-            {{ $counts['booking_drone']['new'] }} Baru
-          </span>
-        @endif
+        <div id="new-badge-container-booking_drone">
+          @if($counts['booking_drone']['new'] > 0)
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-800 animate-pulse">
+              {{ $counts['booking_drone']['new'] }} Baru
+            </span>
+          @endif
+        </div>
       </div>
       <div class="mt-4">
         <h3 class="text-sm font-semibold text-slate-500">Booking Jasa Drone</h3>
-        <p class="text-3xl font-extrabold text-slate-800 mt-1">{{ $counts['booking_drone']['total'] }}</p>
+        <p id="total-count-booking_drone" class="text-3xl font-extrabold text-slate-800 mt-1">{{ $counts['booking_drone']['total'] }}</p>
         <span class="text-xs text-slate-400 group-hover:text-blue-600 transition font-medium inline-flex items-center gap-1 mt-2">
           Kelola Pengajuan &rarr;
         </span>
@@ -56,15 +58,17 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
         </div>
-        @if($counts['booking_crew']['new'] > 0)
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-800 animate-pulse">
-            {{ $counts['booking_crew']['new'] }} Baru
-          </span>
-        @endif
+        <div id="new-badge-container-booking_crew">
+          @if($counts['booking_crew']['new'] > 0)
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-800 animate-pulse">
+              {{ $counts['booking_crew']['new'] }} Baru
+            </span>
+          @endif
+        </div>
       </div>
       <div class="mt-4">
         <h3 class="text-sm font-semibold text-slate-500">Booking Crews</h3>
-        <p class="text-3xl font-extrabold text-slate-800 mt-1">{{ $counts['booking_crew']['total'] }}</p>
+        <p id="total-count-booking_crew" class="text-3xl font-extrabold text-slate-800 mt-1">{{ $counts['booking_crew']['total'] }}</p>
         <span class="text-xs text-slate-400 group-hover:text-purple-600 transition font-medium inline-flex items-center gap-1 mt-2">
           Kelola Pengajuan &rarr;
         </span>
@@ -79,15 +83,17 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
           </svg>
         </div>
-        @if($counts['order_drone']['new'] > 0)
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-800 animate-pulse">
-            {{ $counts['order_drone']['new'] }} Baru
-          </span>
-        @endif
+        <div id="new-badge-container-order_drone">
+          @if($counts['order_drone']['new'] > 0)
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-800 animate-pulse">
+              {{ $counts['order_drone']['new'] }} Baru
+            </span>
+          @endif
+        </div>
       </div>
       <div class="mt-4">
         <h3 class="text-sm font-semibold text-slate-500">Order Drone</h3>
-        <p class="text-3xl font-extrabold text-slate-800 mt-1">{{ $counts['order_drone']['total'] }}</p>
+        <p id="total-count-order_drone" class="text-3xl font-extrabold text-slate-800 mt-1">{{ $counts['order_drone']['total'] }}</p>
         <span class="text-xs text-slate-400 group-hover:text-emerald-600 transition font-medium inline-flex items-center gap-1 mt-2">
           Kelola Pengajuan &rarr;
         </span>
@@ -103,15 +109,17 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
         </div>
-        @if($counts['servis_drone']['new'] > 0)
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-800 animate-pulse">
-            {{ $counts['servis_drone']['new'] }} Baru
-          </span>
-        @endif
+        <div id="new-badge-container-servis_drone">
+          @if($counts['servis_drone']['new'] > 0)
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-800 animate-pulse">
+              {{ $counts['servis_drone']['new'] }} Baru
+            </span>
+          @endif
+        </div>
       </div>
       <div class="mt-4">
         <h3 class="text-sm font-semibold text-slate-500">Servis Drone</h3>
-        <p class="text-3xl font-extrabold text-slate-800 mt-1">{{ $counts['servis_drone']['total'] }}</p>
+        <p id="total-count-servis_drone" class="text-3xl font-extrabold text-slate-800 mt-1">{{ $counts['servis_drone']['total'] }}</p>
         <span class="text-xs text-slate-400 group-hover:text-amber-600 transition font-medium inline-flex items-center gap-1 mt-2">
           Kelola Pengajuan &rarr;
         </span>
@@ -145,7 +153,7 @@
             <th class="px-6 py-4 text-right">Aksi</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-slate-100">
+        <tbody id="submissions-table-body" class="divide-y divide-slate-100">
           @forelse($recentSubmissions as $item)
             <tr class="hover:bg-slate-50/30 transition">
               <!-- Service Type -->
@@ -566,6 +574,201 @@
       document.body.classList.remove('overflow-hidden');
     }
   }
+
+  // Realtime Polling Logic
+  function pollDashboardData() {
+    fetch("{{ route('admin.dashboard.fetch-latest') }}")
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          // 1. Update stats counts and new badges
+          for (const [key, val] of Object.entries(data.counts)) {
+            const totalEl = document.getElementById(`total-count-${key}`);
+            if (totalEl) {
+              totalEl.textContent = val.total;
+            }
+
+            const badgeContainer = document.getElementById(`new-badge-container-${key}`);
+            if (badgeContainer) {
+              if (val.new > 0) {
+                badgeContainer.innerHTML = `
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-800 animate-pulse">
+                    \${val.new} Baru
+                  </span>
+                `;
+              } else {
+                badgeContainer.innerHTML = '';
+              }
+            }
+          }
+
+          // 2. Rebuild Recent Submissions table body
+          const tbody = document.getElementById('submissions-table-body');
+          if (tbody) {
+            if (data.recentSubmissions.length === 0) {
+              tbody.innerHTML = `
+                <tr>
+                  <td colspan="7" class="px-6 py-12 text-center text-slate-500">
+                    <div class="flex flex-col items-center justify-center gap-2">
+                      <svg viewBox="0 0 24 24" class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" stroke-width="1.6" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                      </svg>
+                      <span class="font-medium">Belum ada pengajuan masuk.</span>
+                    </div>
+                  </td>
+                </tr>
+              `;
+              return;
+            }
+
+            let html = '';
+            data.recentSubmissions.forEach(item => {
+              // Service type column
+              let typeCell = `
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border \${item.badge_color}">
+                    \${item.submission_label}
+                  </span>
+                </td>
+              `;
+
+              // Client info column
+              let hpText = item.hp ? item.hp : '-';
+              let clientCell = `
+                <td class="px-6 py-4">
+                  <div class="font-bold text-slate-900">\${item.nama}</div>
+                  <div class="text-xs text-slate-500 mt-0.5">\${item.email}</div>
+                  <div class="text-xs text-slate-600 mt-1"><i class="fa fa-phone mr-1"></i>\${hpText}</div>
+                </td>
+              `;
+
+              // Booking detail column
+              let detailText = '';
+              if (item.submission_type === 'booking_crew') {
+                let paketText = item.paket ? item.paket : '-';
+                detailText = `
+                  <div class="font-semibold text-slate-800 uppercase">\${item.layanan}</div>
+                  <div class="text-xs text-blue-600 font-semibold mt-0.5 tracking-wide">Paket: \${paketText}</div>
+                `;
+              } else {
+                let catatanText = item.catatan ? item.catatan : 'Tidak ada catatan';
+                detailText = `
+                  <div class="text-slate-800 max-w-xs truncate" title="\${catatanText}">\${catatanText}</div>
+                `;
+              }
+
+              if (item.submission_type === 'booking_drone' && item.tipe_jadwal) {
+                if (item.tipe_jadwal === 'harian') {
+                  let tglSelesai = item.tanggal_selesai_acara_formatted ? item.tanggal_selesai_acara_formatted : '';
+                  detailText += `
+                    <div class="mt-1">
+                      <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-100" title="Selesai: \${item.tanggal_selesai_acara} (Estimasi: \${item.estimasi_selesai_acara})">
+                        Harian s/d \${tglSelesai} (\${item.estimasi_selesai_acara})
+                      </span>
+                    </div>
+                  `;
+                } else if (item.tipe_jadwal === 'jam') {
+                  detailText += `
+                    <div class="mt-1">
+                      <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-50 text-purple-700 border border-purple-100">
+                        Jam: \${item.waktu_mulai_acara}
+                      </span>
+                    </div>
+                  `;
+                }
+              }
+
+              if (item.lokasi) {
+                let escapedAddress = item.lokasi.replace(/'/g, "\\'");
+                let displayAddress = item.lokasi.length > 35 ? item.lokasi.substring(0, 35) + '...' : item.lokasi;
+                detailText += `
+                  <button type="button" onclick="showMapModal('\${escapedAddress}')" class="text-xs text-slate-500 hover:text-blue-600 hover:underline transition text-left mt-1.5 block">
+                    <i class="fa fa-map-marker text-red-500 mr-0.5"></i> \${displayAddress}
+                  </button>
+                `;
+              }
+
+              let bookingDetailCell = `<td class="px-6 py-4">\${detailText}</td>`;
+
+              // DP and Payment Proof column
+              let paymentProofContent = '';
+              if (item.bukti_pembayaran_dp_url) {
+                paymentProofContent = `
+                  <button type="button" onclick="showImageModal('\${item.bukti_pembayaran_dp_url}')" class="text-xs text-emerald-600 hover:underline font-semibold mt-0.5 block border-0 bg-transparent p-0 cursor-pointer">
+                    <i class="fa fa-image mr-0.5"></i> Lihat Bukti
+                  </button>
+                `;
+              } else {
+                paymentProofContent = `<span class="text-xs text-slate-400 mt-0.5 block">Tidak ada bukti</span>`;
+              }
+
+              let paymentCell = `
+                <td class="px-6 py-4 text-slate-700">
+                  <div class="font-bold text-slate-900">\${item.dp_formatted}</div>
+                  \${paymentProofContent}
+                </td>
+              `;
+
+              // Date column
+              let dateCell = `
+                <td class="px-6 py-4 text-slate-500 text-xs">
+                  <div>\${item.created_at_formatted}</div>
+                  <div class="text-slate-400 mt-0.5">\${item.created_at_human}</div>
+                </td>
+              `;
+
+              // Status column
+              let statusBadge = '';
+              if (item.status === 'baru') {
+                if (item.bukti_pembayaran_dp_url) {
+                  statusBadge = `
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+                      Menunggu Persetujuan
+                    </span>
+                  `;
+                } else {
+                  statusBadge = `
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-yellow-50 text-yellow-700 border border-yellow-200">
+                      Menunggu Validasi
+                    </span>
+                  `;
+                }
+              } else {
+                statusBadge = `
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    Diproses
+                  </span>
+                `;
+              }
+
+              let statusCell = `<td class="px-6 py-4" id="status-badge-\${item.submission_type}-\${item.id}">\${statusBadge}</td>`;
+
+              // Action column
+              let actionClass = item.status === 'proses' ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-slate-900 hover:bg-slate-800';
+              let escapedName = item.nama.replace(/'/g, "\\'");
+              let discId = item.discussion_id ? item.discussion_id : 'null';
+              let actionCell = `
+                <td class="px-6 py-4 text-right">
+                  <button type="button" 
+                          id="btn-kelola-\${item.submission_type}-\${item.id}"
+                          onclick="openManagePopup('\${item.submission_type}', \${item.id}, '\${escapedName}', '\${item.status}', '\${discId}')" 
+                          class="inline-flex items-center px-3 py-1.5 \${actionClass} text-white font-bold text-xs uppercase tracking-wide rounded-lg transition">
+                    Kelola
+                  </button>
+                </td>
+              `;
+
+              html += `<tr class="hover:bg-slate-50/30 transition">\${typeCell}\${clientCell}\${bookingDetailCell}\${paymentCell}\${dateCell}\${statusCell}\${actionCell}</tr>`;
+            });
+            tbody.innerHTML = html;
+          }
+        }
+      })
+      .catch(err => console.error("Realtime poll error:", err));
+  }
+
+  // Poll every 5 seconds
+  setInterval(pollDashboardData, 5000);
 
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
