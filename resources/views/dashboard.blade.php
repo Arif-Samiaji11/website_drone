@@ -333,12 +333,18 @@
                   <!-- Status -->
                   <td class="px-6 py-4">
                     @if($item->status === 'baru')
-                      <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                        Baru
-                      </span>
+                      @if($item->bukti_pembayaran_dp)
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                          Menunggu Persetujuan
+                        </span>
+                      @else
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">
+                          Menunggu Validasi
+                        </span>
+                      @endif
                     @else
                       <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                        Proses
+                        Diproses
                       </span>
                     @endif
                   </td>
